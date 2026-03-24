@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 public class Applicant {
     private String name;
     private int age;
-    private BigDecimal monthlyIncome;
+    private double monthlyIncome;
     private EmploymentType employmentType;
     private int creditScore;
 }

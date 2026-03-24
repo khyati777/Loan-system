@@ -7,14 +7,12 @@ import com.loanservice.domain.Applicant;
 import com.loanservice.repository.LoanApplicationRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-
 @Service @RequiredArgsConstructor
 public class LoanService {
     private final LoanApplicationRepository repository;
@@ -70,13 +68,11 @@ public class LoanService {
         if (amount.compareTo(new BigDecimal("1000000")) > 0) rate = rate.add(new BigDecimal("0.5"));
         return rate.setScale(2, RoundingMode.HALF_UP);
     }
-
     public BigDecimal calculateEMI(BigDecimal p, BigDecimal r, int n) {
         BigDecimal mRate = r.divide(new BigDecimal("1200"), MC);
         BigDecimal pow = BigDecimal.ONE.add(mRate).pow(n, MC);
         return p.multiply(mRate).multiply(pow).divide(pow.subtract(BigDecimal.ONE), MC).setScale(2, RoundingMode.HALF_UP);
     }
-
     private LoanApplicationResponse mapToResponse(LoanApplication app) {
         LoanApplicationResponse.LoanApplicationResponseBuilder builder = LoanApplicationResponse.builder()
             .applicationId(app.getApplicationId()).status(app.getStatus()).riskBand(app.getRiskBand()).rejectionReasons(app.getRejectionReasons());
